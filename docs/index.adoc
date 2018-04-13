@@ -190,3 +190,185 @@ structured content in reusable components which you will learn about in the next
 ****
 
 
+= Part 2: Content types and parts
+
+Now it is time to introduce content types for structured data and how to display the data with part components. You will also learn how to build pages and page templates with components and regions.
+
+== Add some Countries
+
+In order to make our `World` slightly more interesting, we will add some countries as structured data.
+
+The structure of data (such as countries) are defined in XML files and are referred to as _Content Types_. The content type defines the form (and underlying schema) of items you manage.
+
+. Create a folder named “_country_” inside the “_content-types_” folder of your project.
+. Create an XML file named “_country.xml_” in the “_country_” folder and paste in the code below for the `Country` content type.
+
++
+.Country content type:
+[source,XML]
+----
+include::../src/main/resources/site/content-types/country/country.xml[]
+----
++
+
+Each content type can have a custom icon that will be visible in the *Content Studio* interface. Though not required, content icons can be helpful for content editors.
+
+. Copy the image below to the the same folder (`content-types/country`) with the name _country.png_.
+
+image::images/country.png["Hello World site", width=100]
+
+This content type defines form inputs for _description_ and _population_. Every content has a built-in field for _Display Name_. When the app is redeployed, you can create a new content of type *Country* in the *Content Studio*. The *Country* content type will produce the form seen below. Each country content that is created with this form will become a page in the site when a page component is added to it with the dropdown in the page editor on the right. More on this later.
+
+image::images/country-content-form.jpg["Country Content form", width=100%]
+
+
+NOTE: Each content type must reside in its own folder under the `site/content-types` directory. The name of the content type XML file and the icon PNG file must be the same as the directory that contains them.
+
+
+== Create the Country Part
+
+We also need a way to display the data from our *Country* content type. This time, rather than making another page controller, we will create a http://docs.enonic.com/en/stable/developer/site/part/index.html#part[Part] component. *Parts are reusable components* that can be added to _regions_ in pages or layout components - more on this later.
+
+. Create a folder called _country_ inside the _parts_ folder in your project.
+. Add the part controller and view files inside the _country_ folder:
+
++
+.Country part controller:
+[source,Javascript]
+----
+include::../src/main/resources/site/parts/country/country.js[]
+----
++
+
+The part controller file above handles the *GET* request and passes the country content data to the view file which is shown below.
+
++
+.Country part view:
+[source,HTML]
+----
+include::../src/main/resources/site/parts/country/country.html[]
+----
++
+
+
+== The Hello Region Page
+
+Parts start to make sense when placed into a _region_. Regions are “slots” contained within pages or layouts. Pages and layouts may contain multiple regions, and each region must have a unique name.
+
+Let’s create a new page component with a single region called _Main_. Later we will use the *Content Studio* to place the _Country_ part into this region.
+
+The benefit of a region (see http://docs.enonic.com/en/stable/developer/site/page/index.html#apps-page-regions[Regions]) is that a page component can be re-used across multiple different pages by simply adding different parts to them as needed.
+
+. Create a folder called _hello-region_ in your `project’s site/pages/` folder.
+. Add the _Hello region_ page descriptor, controller and view files:
+
++
+.Page descriptor:
+[source,XML]
+----
+include::../src/main/resources/site/pages/hello-region/hello-region.xml[]
+----
++
+
+The XML file above is a http://docs.enonic.com/en/stable/developer/site/page/index.html#apps-page-descriptor[Descriptor]. Regions and page configurations can be defined here.
+
++
+.Page controller:
+[source,Javascript]
+----
+include::../src/main/resources/site/pages/hello-region/hello-region.js[]
+----
++
+
+This page controller uses a portal library (see `lib-portal` in http://docs.enonic.com/en/stable/reference/libraries/index.html#js-libraries[Javascript Libraries]) to get the content and extract the _main_ region which was defined in the descriptor XML file.
+
++
+.Page view:
+[source,HTML]
+----
+include::../src/main/resources/site/pages/hello-region/hello-region.html[]
+----
++
+
+The view file above defines the place on the page where the region will render component parts that are dragged and dropped in the *Page Editor*.
+
+. When done - redeploy your app once again!
+
+  ./gradlew deploy
+
+NOTE: You can restart XP in http://docs.enonic.com/en/stable/developer/projects/devmode.html#gradle-dev-mode[Development mode] and then the app won’t have to be redeployed after making changes.
+
+== Add your favorite country
+
+Now that the _Country_ content type is installed (and we have a part to display them), we can create new countries using the *Content Studio* interface.
+
+. Right-click on the _Hello World_ site from the navigation tree and select *New*. The *Create Content* dialogue will open.
+. Select _Country_ from the list of content types.
+. Fill in the form with the details of your favorite country.
+
+Similar to the site, we must also configure a view for the country
+
+[start=4]
+. In the toolbar, in the top right corner of the page, click the image:images/icon-monitor.png[Menu icon, 30] button to activate the *Page Editor* (panel on the right-hand side with blue background).
+
+image::images/country-content-edit.jpg["Country Content form", width=100%]
+
+[start=5]
+. In the *Page Editor* select _Hello Region_ from the template selector dropdown. If the dropdown arrow is not visible, double-click inside the option field or start typing "_hello world_" in it to see the options.
+
+The blue box with _Drop here_ is the region that we defined in the project code and it’s where we add components here in the *Page Editor*.
+
+[start=6]
+. Click the image:images/icon-cog.png[Cog icon, 30] button in the toolbar to open the *Inspection Panel* (far right).
+. In the *Inspection Panel*, click the *Insert* tab. This reveals a list of default component types that can be placed into regions.
+. Click and drag a new part (image:images/icon-part.png[Part icon, 30]) into the box on the page.
+. A new dropdown option will appear. Select the _country_ part.
+. Save draft and close the content edit tab.
+
+When you click on the country in the content pane, you should see a preview of the rendered page, something like this:
+
+image::images/country-content-rendered.jpg["Country Content rendered", width=100%]
+
+== The Country Page Template
+
+With our current solution, sadly, we would have to create a new page for every country we add. As this is not a very effective way of working with large data sets, we will create a page template that will automatically render all country content.
+
+. Select the Templates item image:images/icon-templates.png[Templates icon, 30] located below the _Hello World_ site in the content panel.
+. Click *New* and select _Page Template_.
+. Fill in the form as follows:
+
+:: . Display Name: _Country_
+:: . Supports: _Country_ (select from the list of content types)
+
+. If the blue *Page Editor* panel is not displayed on the right, click the image:images/icon-monitor.png[Menu icon, 30] button in the toolbar.
+. Select the _Hello Region_ controller with the dropdown in the blue *Page Editor* panel.
+. Open the *Inspection Panel* (activated with the image:images/icon-cog.png[Cog icon, 30] button in the toolbar).
+. Under the _Insert_ tab, drag and drop a new _part_ (image:images/icon-part.png[Part icon, 30]) into the empty region where it says _Drop here_.
+. Select the _country_ part from the dropdown.
+. Click _Save draft_ in the toolbar and close the tab.
+
+Every _Country_ content you create from now on will use this template by default.
+
+NOTE: The *Supports* property is the key. A page template will support rendering of the content types specified here.
+
+Try this out by creating a few new countries in your site. Be aware that every content you create will be a child of the content that was selected in the content pane, so make sure you select the _Hello World_ site before clicking *New* in the toolbar. Or better yet, get in the habit of right-clicking the desired parent content and selecting *New* from the context menu. This way you will never accidentally create a content in the wrong place.
+
+NOTE: Starting from *Enonic XP 6.11*, the *Detail Panel* on the far right of the *Browse View* has a little box showing the rendering mode. Compare your favorite country to other countries that are rendered automatically:
+
+image::images/rendering-mode-view.png["Rendering mode", width=100%]
+
+== Extra task
+
+*Make your Favorite Country use the page template too!*
+
+You might remember that your favorite country was “hardcoded” - so let’s change it to use templates as well.
+
+. In the *Browse View* panel, double-click the country content to edit it.
+. Open the *Inspection Panel* with the image:images/icon-cog.png[Cog icon, 30] button and select the *Inspect* tab if it’s not already selected.
+. You should see a label for *Page Template* with _Custom_ selected and a label for *Page controller* with _Hello Region_ selected. If you see a label for *Part* instead then click on the page above the country name to select the page. Then click the *Inspect* tab. (See image below)
+. Now select _Automatic_ from under the *Page Template* label in the *Inspect* tab.
+. Save draft and close the tab.
+
+image::images/page-template-automatic.jpg["Automatic Page Template", width=100%]
+
+You can select another *Page template* at any time, or even customize the presentation of a single content.
