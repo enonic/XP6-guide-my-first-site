@@ -1,0 +1,192 @@
+= Your first Enonic Website
+
+*A step-by-step tutorial for building your first Website on the Enonic platform*
+
+image::images/ready-set-code.svg["Ready...Set...Code!", width=100%]
+
+****
+[CAUTION]
+====
+In order to complete this tutorial, the Enonic development environment must be installed on your computer:
+https://developer.enonic.com/enonic-101/install-developer-environment
+====
+****
+
+
+= Part 1: Project set up
+
+In this first section, you will learn how to initialize a new project with the CLI toolbox that comes with *Enonic XP*. Then you will build and deploy the app with Gradle. Next you will create a couple of files for your first page component. Finally, you’ll create a site with your app in the Content Studio.
+
+== Initialize project
+
+*Enonic XP* includes the http://docs.enonic.com/en/stable/reference/toolbox/index.html#toolbox[Toolbox CLI] which can perform several useful operations.
+The http://docs.enonic.com/en/stable/reference/toolbox/init-project.html#init-project[init-project] operation will clone an existing project from a repository
+source, such as https://github.com/[GitHub]. The https://market.enonic.com/vendors/enonic/vanilla-starter[starter-vanilla] project will initialize a new application
+with the standard structures required (see http://docs.enonic.com/en/stable/developer/projects/index.html#projects[Projects]).
+
+. *Create a new folder* at a suitable location on your filesystem for the application project files. e.g. `/Users/<username>/projects/myapp`. This will be the project root.
+. *Change directory* in the terminal to this project root.
+
+ cd /Users/<username>/projects/myapp
+
+. *Run the following command*, replacing `[$XP_INSTALL]` with the path to your unzipped XP installation:
+
+
+ [$XP_INSTALL]/toolbox/toolbox.sh init-project -n com.company.myapp -r starter-vanilla -c v1.3.0
+
+For example, if your XP installation is at `/Users/enonic/installs/enonic-xp-${release}` then you would enter:
+
+ /Users/enonic/installs/enonic-xp-${release}/toolbox/toolbox.sh init-project -n com.company.myapp -r starter-vanilla -c v1.3.0
+
+NOTE: Only basic characters (a-z, 0-9 and .) may be used for application names, and the name must be globally unique. We recommend following
+  standard Java package naming conventions such as com.mycompany.myapp.
+
+*Your project folder will now be filled with the standard folder structure for developing an app.*
+
+
+== Build and Deploy
+
+Now that the basic project structure is set up, we should test that it builds and deploys successfully. But before deploying the app, the
+`$XP_HOME` environment variable must be set to the path of the home folder of the XP installation.
+
+. *Run the following command* in the terminal, replacing `[$XP_INSTALL]` with your installation location (no brackets):
+
+:: *Linux and OSX:*
+
+  export XP_HOME=[$XP_INSTALL]/home
+
+:: For example, if your XP installation is at `/Users/enonic/installs/enonic-xp-${release}` then you would enter:
+
+  export XP_HOME=/Users/enonic/installs/enonic-xp-${release}/home
+
+:: *Windows*:
+
+  set XP_HOME=[$XP_INSTALL]/home
+
+. *Execute the following command* (from the project root directory):
+
+:: *Linux and OSX:*
+
+  ./gradlew deploy
+
+:: *Windows:*
+
+  gradlew deploy
+
+:: The included http://gradle.org>[Gradle wrapper] will build the app and then attempt to deploy it to your installation.
+
+:: The deployment step simply moves the result of the build (the application JAR file) into the `$XP_HOME/deploy` directory.
+From there, *Enonic XP* will detect, install and start the application automatically.
+
+:: You will need to access the Administrative console to check that the app has installed and started. *Enonic XP* must be running to proceed.
+
+. Log in to the http://localhost:8080[Administrative console] with the Administrative user credentials. (The default credentials are
+userid: *su* and password: *password*).
+
+. Navigate to the *Applications Tool*. The application you just deployed should be listed here.
+
+. Click the app called "_Myapp_" to see information about it and confirm that it has started.
+
+image::images/myapp-apps.jpg["My First app deployed", width=100%]
+
+NOTE: You can change the display name of the application by editing the gradle.properties file.
+
+
+== Create the "_Hello World_" Site
+
+Our next goal is to set up a "_Hello World_" site in *Content Studio*, but first we must add some initial configuration to our project.
+
+=== Site descriptor
+
+An application can serve many purposes and building sites is just one of them. The `site.xml` file is the descriptor that will let *Enonic
+XP* know that this app can be added to a site. Response filters and controller mappings can be set up in the site descriptor as well as
+application configurations (see http://docs.enonic.com/en/stable/developer/site/site.html#site-descriptor[Site descriptors]).
+
+A basic `site.xml` file was automatically created by the `init-project` script and we don't need to make any changes for now. Later in this
+tutorial we will edit `site.xml` to add a site-wide configuration.
+
+  [project-root]/src/main/resources/site/site.xml
+
+=== Application description and icon
+
+The `application.xml` file at `[project-root]/src/main/resources/application.xml` can be edited to provide a suitable description for
+your app. Go ahead and give your app a custom description.
+
+The `application.svg` file can be replaced with a custom app icon. The description and icon will be visible in the admin tools.
+
+NOTE: Most of the files we will be working with are inside the "site" directory in the project folder - `src/main/resources/site. All file
+  paths from now on will begin with `site/`.
+
+=== Page Component
+
+Page components are the most basic building blocks of websites in *Enonic XP* (see http://docs.enonic.com/en/stable/developer/site/page/index.html#page[Page]). They require a JavaScript
+controller and optionally an XML descriptor and an HTML view. This first example does not need a descriptor file.
+
+A page controller (see http://docs.enonic.com/en/stable/developer/site/page/index.html#page[Page]) is a JavaScript file that handles requests such as *GET* and *POST*.
+Controllers usually pass data in the form of a JavaScript object to be dynamically rendered in an HTML view. No data is passed in the
+example below, but the view file is specified and rendered as static HTML.
+
+. Create a folder called `hello` inside the `site/pages` directory.
+
+. Create the page controller and page view files specified below inside the `hello` folder:
++
+[source,javascript]
+----
+include::../src/main/resources/site/pages/hello/hello.js[]
+----
++
+
+The `view`  below is a simple HTML file. This file will be updated later to handle dynamic content.
+
++
+[source,HTML]
+----
+include::../src/main/resources/site/pages/hello/hello.html[]
+----
++
+
+. Once these files are in place, redeploy the app from the terminal with `./gradlew deploy`.
+
+NOTE: Each page controller must reside in its own folder under the `site/pages` directory. The name of the controller JavaScript file
+  must be the same as the directory that contains it. The HTML view file can reside anywhere in the project and have any valid file name.
+  This allows view files to be shared between components.
+
+=== Create Site
+
+Now that the files are in place, we can create the site in a browser using the Content Studio admin tool.
+Switch between different tools by clicking the image:images/icon-menu.png[Menu icon, 30] menu icon (top right) to open the Launcher panel.
+
+. In your browser, navigate to the *Content Studio* tool. (Use the menu icon at the top right)
+. Click *New* and select *Site* from the list of content types (Opens a tab for editing the new site).
+. Fill in the form with *Display Name*: _Hello World_.
+. Select your *MyApp* application in the *Applications* dropdown.
+. If you don't see a blue area on the right of the page then click image:images/icon-monitor.png[Menu icon, 30] button in the toolbar to open the *Page Editor*.
+. Use the dropdown in the *Page Editor* (blue area) to select the "_hello_" page.
+. Click the *Save draft* button in the toolbar (top-left).
+. Now close the *Hello World* site editor tab to see the content pane.
+
+When you click on the *Hello World* site content, the preview should look something like this:
+
+image::images/hello-world-site1.jpg["Hello World site", width=100%]
+
+****
+This concludes part one of the tutorial.
+
+*Let's review:*
+
+You've learned how to initialize a new project with the CLI toolbox init-project.
+
+
+Then you set the `$XP_HOME` environment variable and deployed the app with gradle.
+
+Next, you created a page component with a JavaScript
+controller and an HTML view file.
+
+Finally, you created a site in the Content Studio and added the app and page component to the site.
+
+This might seem like a lot of work just to make a static page; but we have laid a solid foundation in preparation for dynamically displaying
+structured content in reusable components which you will learn about in the next section.
+
+****
+
+
