@@ -2,7 +2,7 @@
 
 *A step-by-step tutorial for building your first Website on the Enonic platform*
 
-image::images/ready-set-code.jpg["Ready...Set...Code!", width=100%]
+image::images/ready-set-code.jpg["Ready...Set...Code!", width=50%, align="center"]
 
 ****
 [CAUTION]
@@ -87,7 +87,7 @@ userid: *su* and password: *password*).
 
 . Click the app called "_Myapp_" to see information about it and confirm that it has started.
 
-image::images/myapp-apps.jpg["My First app deployed", width=100%]
+image::images/myapp-apps.jpg["My First app deployed", width=90%, align="center"]
 
 NOTE: You can change the display name of the application by editing the gradle.properties file.
 
@@ -167,7 +167,7 @@ Switch between different tools by clicking the image:images/icon-menu.png[Menu i
 
 When you click on the *Hello World* site content, the preview should look something like this:
 
-image::images/hello-world-site1.jpg["Hello World site", width=100%]
+image::images/hello-world-site1.jpg["Hello World site", width=90%, align="center"]
 
 ****
 This concludes part one of the tutorial.
@@ -217,11 +217,11 @@ Each content type can have a custom icon that will be visible in the *Content St
 
 . Copy the image below to the the same folder (`content-types/country`) with the name _country.png_.
 
-image::images/country.png["Country content type", width=100]
+image::images/country.png["Country content type", width=100, align="center"]
 
 This content type defines form inputs for _description_ and _population_. Every content has a built-in field for _Display Name_. When the app is redeployed, you can create a new content of type *Country* in the *Content Studio*. The *Country* content type will produce the form seen below. Each country content that is created with this form will become a page in the site when a page component is added to it with the dropdown in the page editor on the right. More on this later.
 
-image::images/country-content-form.jpg["Country Content form", width=100%]
+image::images/country-content-form.jpg["Country Content form", width=90%, align="center"]
 
 
 NOTE: Each content type must reside in its own folder under the `site/content-types` directory. The name of the content type XML file and the icon PNG file must be the same as the directory that contains them.
@@ -313,7 +313,7 @@ Similar to the site, we must also configure a view for the country
 [start=4]
 . In the toolbar, in the top right corner of the page, click the image:images/icon-monitor.png[Menu icon, 30] button to activate the *Page Editor* (panel on the right-hand side with blue background).
 
-image::images/country-content-edit.jpg["Country Content form", width=100%]
+image::images/country-content-edit.jpg["Country Content form", width=90%, align="center"]
 
 [start=5]
 . In the *Page Editor* select _Hello Region_ from the template selector dropdown. If the dropdown arrow is not visible, double-click inside the option field or start typing "_hello world_" in it to see the options.
@@ -329,7 +329,7 @@ The blue box with _Drop here_ is the region that we defined in the project code 
 
 When you click on the country in the content pane, you should see a preview of the rendered page, something like this:
 
-image::images/country-content-rendered.jpg["Country Content rendered", width=100%]
+image::images/country-content-rendered.jpg["Country Content rendered", width=90%, align="center"]
 
 == The Country Page Template
 
@@ -357,7 +357,7 @@ Try this out by creating a few new countries in your site. Be aware that every c
 
 NOTE: Starting from *Enonic XP 6.11*, the *Detail Panel* on the far right of the *Browse View* has a little box showing the rendering mode. Compare your favorite country to other countries that are rendered automatically:
 
-image::images/rendering-mode-view.png["Rendering mode", width=100%]
+image::images/rendering-mode-view.png["Rendering mode", width=90%, align="center"]
 
 == Extra task
 
@@ -371,7 +371,7 @@ You might remember that your favorite country was “hardcoded” - so let’s c
 . Now select _Automatic_ from under the *Page Template* label in the *Inspect* tab.
 . Save draft and close the tab.
 
-image::images/page-template-automatic.jpg["Automatic Page Template", width=100%]
+image::images/page-template-automatic.jpg["Automatic Page Template", width=90%, align="center"]
 
 You can select another *Page template* at any time, or even customize the presentation of a single content.
 
@@ -405,7 +405,7 @@ The file above defines a content type for cities with a required field for the l
 
 . Copy the image below and save it in the same folder with the _City_ content type. Name it _city.png_.
 
-image::images/city.png["City content type", width=100]
+image::images/city.png["City content type", width=100, align="center"]
 
 === City list part
 
@@ -471,7 +471,7 @@ All of the project’s files are now complete. The rest of the steps will be per
 . Edit the site content. You will notice that the `Myapp` application is now red due to a missing required configuration.
 . Click the pencil icon to edit the `Myapp` configuration and enter your *Google API* key. You can get a *Google API* key from the Google developers site if you don’t already have one.
 
-image::images/app-config.jpg["Myapp config", width=100%]
+image::images/app-config.jpg["Myapp config", width=90%, align="center"]
 
 == Create Cities
 
@@ -492,11 +492,11 @@ Now we need to create a few _City_ contents under each country. (Sample data is 
 . Save draft.
 . Create several more city contents below each country content by repeating the previous steps. Sample data is provided in the table below.
 
-image::images/city-data-table.png["Sample city data", width=100%]
+image::images/city-data-table.png["Sample city data", width=90%, align="center"]
 
 Each country page will now have a list of the cities you created with a Google map of the location. It should look something like this:
 
-image::images/city-list.png["City list", width=100%]
+image::images/city-list.png["City list", width=90%, align="center"]
 
 
 == Configure City List
@@ -511,7 +511,7 @@ The _City list_ part descriptor (`site/parts/city-list/city-list.xml`) has confi
 
 Now all of the countries will show the city maps with the new settings. You can override these defaults for any individual country by editing the _Country_ content and changing its _City list_ part configuration.
 
-image::images/city-list-config.jpg["City list", width=100%]
+image::images/city-list-config.jpg["City list", width=90%, align="center"]
 
 == Go Online
 
