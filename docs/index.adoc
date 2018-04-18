@@ -13,11 +13,11 @@ https://developer.enonic.com/enonic-101/install-developer-environment
 ****
 
 
-= Part 1: Project set up
+== Part 1: Project set up
 
 In this first section, you will learn how to initialize a new project with the CLI toolbox that comes with *Enonic XP*. Then you will build and deploy the app with Gradle. Next you will create a couple of files for your first page component. Finally, you’ll create a site with your app in the Content Studio.
 
-== Initialize project
+=== Initialize project
 
 *Enonic XP* includes the http://docs.enonic.com/en/stable/reference/toolbox/index.html#toolbox[Toolbox CLI] which can perform several useful operations.
 The http://docs.enonic.com/en/stable/reference/toolbox/init-project.html#init-project[init-project] operation will clone an existing project from a repository
@@ -44,7 +44,7 @@ NOTE: Only basic characters (a-z, 0-9 and .) may be used for application names, 
 *Your project folder will now be filled with the standard folder structure for developing an app.*
 
 
-== Build and Deploy
+=== Build and Deploy
 
 Now that the basic project structure is set up, we should test that it builds and deploys successfully. But before deploying the app, the
 `$XP_HOME` environment variable must be set to the path of the home folder of the XP installation.
@@ -92,11 +92,11 @@ image::images/myapp-apps.jpg["My First app deployed", width=90%, align="center"]
 NOTE: You can change the display name of the application by editing the gradle.properties file.
 
 
-== Create the "_Hello World_" Site
+=== Create the "_Hello World_" Site
 
 Our next goal is to set up a "_Hello World_" site in *Content Studio*, but first we must add some initial configuration to our project.
 
-=== Site descriptor
+==== Site descriptor
 
 An application can serve many purposes and building sites is just one of them. The `site.xml` file is the descriptor that will let *Enonic
 XP* know that this app can be added to a site. Response filters and controller mappings can be set up in the site descriptor as well as
@@ -107,7 +107,7 @@ tutorial we will edit `site.xml` to add a site-wide configuration.
 
   [project-root]/src/main/resources/site/site.xml
 
-=== Application description and icon
+==== Application description and icon
 
 The `application.xml` file at `[project-root]/src/main/resources/application.xml` can be edited to provide a suitable description for
 your app. Go ahead and give your app a custom description.
@@ -117,7 +117,7 @@ The `application.svg` file can be replaced with a custom app icon. The descripti
 NOTE: Most of the files we will be working with are inside the "site" directory in the project folder - `src/main/resources/site. All file
   paths from now on will begin with `site/`.
 
-=== Page Component
+==== Page Component
 
 Page components are the most basic building blocks of websites in *Enonic XP* (see http://docs.enonic.com/en/stable/developer/site/page/index.html#page[Page]). They require a JavaScript
 controller and optionally an XML descriptor and an HTML view. This first example does not need a descriptor file.
@@ -151,7 +151,7 @@ NOTE: Each page controller must reside in its own folder under the `site/pages` 
   must be the same as the directory that contains it. The HTML view file can reside anywhere in the project and have any valid file name.
   This allows view files to be shared between components.
 
-=== Create Site
+==== Create Site
 
 Now that the files are in place, we can create the site in a browser using the Content Studio admin tool.
 Switch between different tools by clicking the image:images/icon-menu.png[Menu icon, 30] menu icon (top right) to open the Launcher panel.
@@ -190,13 +190,13 @@ structured content in reusable components which you will learn about in the next
 ****
 
 
-= Part 2: Content types and parts
+== Part 2: Content types and parts
 
 ****
 Now it is time to introduce content types for structured data and how to display the data with part components. You will also learn how to build pages and page templates with components and regions.
 ****
 
-== Add some Countries
+=== Add some Countries
 
 In order to make our `World` slightly more interesting, we will add some countries as structured data.
 
@@ -227,7 +227,7 @@ image::images/country-content-form.jpg["Country Content form", width=90%, align=
 NOTE: Each content type must reside in its own folder under the `site/content-types` directory. The name of the content type XML file and the icon PNG file must be the same as the directory that contains them.
 
 
-== Create the Country Part
+=== Create the Country Part
 
 We also need a way to display the data from our *Country* content type. This time, rather than making another page controller, we will create a http://docs.enonic.com/en/stable/developer/site/part/index.html#part[Part] component. *Parts are reusable components* that can be added to _regions_ in pages or layout components - more on this later.
 
@@ -253,7 +253,7 @@ include::../src/main/resources/site/parts/country/country.html[]
 +
 
 
-== The Hello Region Page
+=== The Hello Region Page
 
 Parts start to make sense when placed into a _region_. Regions are “slots” contained within pages or layouts. Pages and layouts may contain multiple regions, and each region must have a unique name.
 
@@ -300,7 +300,7 @@ The view file above defines the place on the page where the region will render c
 
 NOTE: You can restart XP in http://docs.enonic.com/en/stable/developer/projects/devmode.html#gradle-dev-mode[Development mode] and then the app won’t have to be redeployed after making changes.
 
-== Add your favorite country
+=== Add your favorite country
 
 Now that the _Country_ content type is installed (and we have a part to display them), we can create new countries using the *Content Studio* interface.
 
@@ -331,7 +331,7 @@ When you click on the country in the content pane, you should see a preview of t
 
 image::images/country-content-rendered.jpg["Country Content rendered", width=90%, align="center"]
 
-== The Country Page Template
+=== The Country Page Template
 
 With our current solution, sadly, we would have to create a new page for every country we add. As this is not a very effective way of working with large data sets, we will create a page template that will automatically render all country content.
 
@@ -359,7 +359,7 @@ NOTE: Starting from *Enonic XP 6.11*, the *Detail Panel* on the far right of the
 
 image::images/rendering-mode-view.png["Rendering mode", width=90%, align="center"]
 
-== Extra task
+=== Extra task
 
 *Make your Favorite Country use the page template too!*
 
@@ -376,17 +376,17 @@ image::images/page-template-automatic.jpg["Automatic Page Template", width=90%, 
 You can select another *Page template* at any time, or even customize the presentation of a single content.
 
 
-= Part 3: Configurable components
+== Part 3: Configurable components
 
 ****
 Welcome to part three. Here we will create a new content type for cities and a configurable component to display them. You will also learn how to make app configurations and you will get more practice with the *Content Studio*. Part three will conclude with content publishing and some advice and best practices.
 ****
 
-== Hello Geo World
+=== Hello Geo World
 
 The home page of the site now shows a list of the countries we have added. To make this even more exciting, we will add a _City_ content type with geo-location and a _City list_ part with configuration capabilities.
 
-=== City content
+==== City content
 
 The next steps will create a content type for adding cities with location coordinates.
 
@@ -407,7 +407,7 @@ The file above defines a content type for cities with a required field for the l
 
 image::images/city.png["City content type", width=100, align="center"]
 
-=== City list part
+==== City list part
 
 We need a part component to display the city data. It will list the cities and show a Google map of each location.
 
@@ -448,7 +448,7 @@ include::../src/main/resources/site/parts/city-list/city-list.html[]
 There is just one more file to edit and then all the code for this project will be complete.
 
 
-== App configuration
+=== App configuration
 
 *Google Maps* won’t work without an API key. We need somewhere to enter the key so that it can be accessed by any component that needs it. The perfect place to define a site-wide configuration is in the site descriptor.
 
@@ -473,7 +473,7 @@ All of the project’s files are now complete. The rest of the steps will be per
 
 image::images/app-config.jpg["Myapp config", width=90%, align="center"]
 
-== Create Cities
+=== Create Cities
 
 Now let’s make use of the new city content type and part component. First we need to add the `City list` part to the `Country` page template.
 
@@ -499,7 +499,7 @@ Each country page will now have a list of the cities you created with a Google m
 image::images/city-list.png["City list", width=90%, align="center"]
 
 
-== Configure City List
+=== Configure City List
 
 The _City list_ part descriptor (`site/parts/city-list/city-list.xml`) has configuration inputs for the map type and zoom level. You can set the default values for these inputs by editing the `City list` part in the `Country page` template.
 
@@ -513,7 +513,7 @@ Now all of the countries will show the city maps with the new settings. You can 
 
 image::images/city-list-config.jpg["City list", width=90%, align="center"]
 
-== Go Online
+=== Go Online
 
 Now that your _Hello World_ site is complete, it’s time to publish.
 
@@ -533,17 +533,17 @@ We are always looking for https://discuss.enonic.com/[feedback].
 Now take a look at some Pro Tips.
 
 
-== Pro Tips
+=== Pro Tips
 
-=== Adding libraries to your project
+==== Adding libraries to your project
 
 Why re-invent the wheel for each app you make? Reusable code can be created in libraries and added to any XP project. Some essential tools can be found in the https://github.com/enonic/lib-util[Util lib], https://github.com/enonic/lib-menu[Menu lib], https://github.com/enonic/lib-recaptcha[RECAPTCHA] and https://github.com/enonic/lib-landingpage[Landing page] libraries.
 
-=== Adding apps to your site
+==== Adding apps to your site
 
 A website can be created from a single app. But a site’s functionality can be extended by adding other pre-made apps. SEO Meta Fields, Disqus comments and Google Analytics are just a few of the many apps that can instantly add features to your site. See what’s available at the http://market.enonic.com/applications[Enonic Market].
 
-=== Handling Multiple projects
+==== Handling Multiple projects
 
 A *best practice* for working on multiple projects would involve keeping a separate `XP_HOME` folder for each project. The folder structure for such a setup would look something like this:
 
@@ -564,7 +564,7 @@ This allows you to have one *Enonic XP* installation for each version and as man
 
 Check this http://labs.enonic.com/articles/working-with-multiple-xp-projects[Enonic Labs article] for a more in-depth process. It also includes some bash scripting that will help with setting and changing `$XP_HOME` and starting and stopping *XP*.
 
-=== Logging JSON objects
+==== Logging JSON objects
 
 While developing an app, it can be helpful to see the structure of objects returned by library functions. The best way to do this is to set up a utilities JavaScript file in the project lib folder. Add the following function to the utilities file:
 
@@ -583,7 +583,7 @@ Call the log function in any controller like the example below and then check th
 
 This logging function and many other useful functions are included in the https://github.com/enonic/lib-util[Util library].
 
-=== Continuous build with Dev Mode or Gradle
+==== Continuous build with Dev Mode or Gradle
 
 It can be quite time consuming to frequently use the terminal to redeploy an app during development. Starting *Enonic XP* in _dev-mode_ will make most changes to your app code visible immediately on _localhost_. See the http://docs.enonic.com/en/stable/developer/projects/devmode.html#gradle-dev-mode[Development mode] page for more information about its capabilities and limitations.
 
