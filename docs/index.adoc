@@ -1,4 +1,4 @@
-= Your first Enonic Website
+= XP 6 Your first Enonic Website
 
 *A step-by-step tutorial for building your first Website on the Enonic platform*
 
