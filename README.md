@@ -1,2 +1,3 @@
-# Enonic XP 6 - Create your first Website
-A step by step guide for building your first Enonic Website
+# My first site documentation files
+
+This repo contains the documentation for https://github.com/enonic/starter-myfirstsite
